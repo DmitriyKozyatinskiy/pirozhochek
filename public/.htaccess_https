@@ -4,10 +4,21 @@
     </IfModule>
 
     RewriteEngine On
+    RewriteBase /
+
+    # RewriteRule ^(.*)$ https://sneekr.herokuapp.com/$1 [P]
+#    RewriteCond %{HTTPS} !=on
+#    RewriteRule ^/?(.*) https://%{SERVER_NAME}/$1 [L]
+
+    RewriteCond %{HTTP:Authorization} ^(.*)
+    RewriteRule .* - [e=HTTP_AUTHORIZATION:%1]
 
     # Redirect Trailing Slashes If Not A Folder...
     RewriteCond %{REQUEST_FILENAME} !-d
     RewriteRule ^(.*)/$ /$1 [L,R=301]
+
+    RewriteCond %{HTTP:X-Forwarded-Proto} !https
+    RewriteRule !/status https://%{SERVER_NAME}%{REQUEST_URI} [L,R]
 
     # Handle Front Controller...
     RewriteCond %{REQUEST_FILENAME} !-d
@@ -17,4 +28,8 @@
     # Handle Authorization Header
     RewriteCond %{HTTP:Authorization} .
     RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
+
+#    # Force SSL
+#    RewriteCond %{HTTPS} !=on
+#    RewriteRule ^/?(.*) https://%{SERVER_NAME}/$1 [R,L]
 </IfModule>
