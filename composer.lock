@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "16edfa20a6db6f336e655b0c7026c065",
+    "content-hash": "687bedd807ec3438e108d2ecb2028af1",
     "packages": [
         {
             "name": "automattic/woocommerce",
@@ -5067,7 +5067,7 @@
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {
-        "php": "^7.0"
+        "php": "^7.1.10"
     },
     "platform-dev": []
 }

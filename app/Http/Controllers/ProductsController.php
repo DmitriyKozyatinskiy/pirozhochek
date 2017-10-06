@@ -373,7 +373,7 @@ class ProductsController extends Controller
       'tax_status' => 'taxable',
       'reviews_allowed' => false,
       'parent_id' => 0,
-      // 'grouped_products' => $childs,
+      'grouped_products' => $children,
       'categories' => [
         $catsCategory,
         $productCategory,
