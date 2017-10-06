@@ -1,4 +1,5 @@
 {
+  "name": "Pirozhochek",
   "private": true,
   "scripts": {
     "dev": "node node_modules/cross-env/dist/bin/cross-env.js NODE_ENV=development node_modules/webpack/bin/webpack.js --progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js",
@@ -19,6 +20,7 @@
     "bootstrap-sass": "^3.3.7",
     "braintree": "^2.0.2",
     "braintree-web": "^3.11.0",
+    "cool-ascii-faces": "1.3.4",
     "cross-env": "^3.2.4",
     "enquire.js": "^2.1.6",
     "eonasdan-bootstrap-datetimepicker": "^4.17.47",
