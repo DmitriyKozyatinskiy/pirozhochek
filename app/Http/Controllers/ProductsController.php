@@ -14,13 +14,9 @@ class ProductsController extends Controller
   public function __construct()
   {
     set_time_limit(0);
-    $data1 = ['page' => 1];
-    $data2 = ['page' => 2];
-    $data3 = ['page' => 3];
+    $data = ['per_page' => 100];
     $this->categories = array_merge(
-      Woocommerce::get('products/categories', $data1),
-      Woocommerce::get('products/categories', $data2),
-      Woocommerce::get('products/categories', $data3)
+      Woocommerce::get('products/categories', $data)
     );
     $this->categories = \collect($this->categories);
     $this->attributes = \collect(Woocommerce::get('products/attributes'));
