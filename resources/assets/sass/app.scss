@@ -1,0 +1,45 @@
+$title-margin-bottom: 15px;
+
+// Fonts
+@import url(https://fonts.googleapis.com/css?family=Raleway:300,400,600);
+
+// Variables
+@import "variables";
+
+// Bootstrap
+@import "node_modules/bootstrap/scss/bootstrap";
+
+
+html, body {
+  //height: 100%;
+}
+
+#app {
+  margin-top: 30px;
+}
+
+.Wrapper {
+  padding-right: 0;
+  padding-left: 0;
+}
+
+.Wrapper__Row {
+  width: 100%;
+}
+
+.Content {
+  margin-top: 45px;
+}
+
+.Title {
+  margin-bottom: $title-margin-bottom;
+}
+
+.InstallExtensionButtonContainer {
+  position: absolute;
+
+  .InstallExtensionButton {
+    border-top-right-radius: 0;
+    border-top-left-radius: 0;
+  }
+}

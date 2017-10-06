@@ -1,0 +1,11 @@
+/node_modules
+/public/storage
+#/public/js
+#/public/css
+/public/hot
+/storage/*.key
+/vendor
+/.idea
+Homestead.json
+Homestead.yaml
+debug.log
