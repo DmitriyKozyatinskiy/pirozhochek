@@ -3,7 +3,7 @@
 @section('content')
   <div class="container">
     <div class="row">
-      <div class="col-md-8 ml-md-auto">
+      <div class="col-md-8 ml-md-auto FormWrapper">
         <h2 class="panel-heading">Загрузка товаров</h2>
         @if (session('confirmation-success'))
           <div class="alert alert-success">
