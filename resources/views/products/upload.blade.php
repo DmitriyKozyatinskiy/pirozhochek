@@ -5,13 +5,13 @@
     <div class="row">
       <div class="col-md-8 ml-md-auto FormWrapper">
         <h2 class="panel-heading">Загрузка товаров</h2>
-        @if (session('confirmation-success'))
-          <div class="alert alert-success">
-            {{ session('confirmation-success') }}
+        @if (session('products-upload-success'))
+          <div class="alert alert-success" role="alert">
+            {{ session('products-upload-success') }}
           </div>
         @endif
         @if (session('confirmation-danger'))
-          <div class="alert alert-danger">
+          <div class="alert alert-danger" role="alert">
             {!! session('confirmation-danger') !!}
           </div>
         @endif

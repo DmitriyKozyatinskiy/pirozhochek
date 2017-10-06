@@ -37,12 +37,14 @@ class ProductsController extends Controller
     ]);
     $type = $request->type;
     $path = $request->products->path();
-    \Excel::load($path, function ($reader) use ($type) {
+    $amount = 0;
+    \Excel::load($path, function ($reader) use ($type, &$amount) {
       $results = \collect($reader->get());
       $grouped = $results->groupBy(function ($item) {
         return $item['zgrupovaniy_tovar'];
       });
       dump($grouped);
+      $amount = count($results) + count($grouped);
 
       $grouped->each(function ($groupedProducts, $key) use ($type) {
         if (!$key) {
@@ -53,25 +55,24 @@ class ProductsController extends Controller
           $childProduct = $type === 'cats'
             ? $this->createCatsProduct($value)
             : $this->createDogsProduct($value);
-          $child = Woocommerce::post('products', $childProduct);
-          array_push($children, $child['id']);
+          //$child = Woocommerce::post('products', $childProduct);
+          //array_push($children, $child['id']);
         });
 
         $groupedProduct = $type === 'cats'
           ? $this->createGroupedCatsProduct($groupedProducts, $children)
           : $groupedProduct = $this->createGroupedDogsProduct($groupedProducts, $children);
-         $parent = Woocommerce::post('products', $groupedProduct);
+         //$parent = Woocommerce::post('products', $groupedProduct);
         try {
-          Woocommerce::post('products/set_grouped', [
-            'parent' => $parent,
-            'children' => $children,
-          ]);
+//          Woocommerce::post('products/set_grouped', [
+//            'parent' => $parent,
+//            'children' => $children,
+//          ]);
         } catch (HttpClientException $e) {}
       });
     })->get();
-    return view('products/upload');
+    return view('products/upload')->with('subscription-save-success', $amount . ' товаров загружено!');
   }
-
 
   private function getExcelAttributeName($attributeName)
   {
