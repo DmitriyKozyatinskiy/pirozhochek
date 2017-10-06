@@ -25832,7 +25832,7 @@ module.exports = function(module) {
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-
+/* WEBPACK VAR INJECTION */(function($) {
 
 /**
  * First we will load all of this project's JavaScript dependencies which
@@ -25853,6 +25853,14 @@ __webpack_require__(139);
 // const app = new Vue({
 //   el: '#app'
 // });
+
+$(document).on('change', '#js-file', function (event) {
+  console.log('HELLO');
+  var name = event.target.files[0].name;
+  console.log($(event.target).parent(), $(event.target).parent().find('span'));
+  $(event.target).parent().find('span').addClass('FileLabel--IsUploaded').attr('data-file-name', name);
+});
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
 /***/ }),
 /* 120 */

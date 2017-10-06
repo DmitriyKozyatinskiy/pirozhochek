@@ -17,3 +17,10 @@ require('./bootstrap');
 // const app = new Vue({
 //   el: '#app'
 // });
+
+$(document).on('change', '#js-file', (event) => {
+  console.log('HELLO');
+  const name = event.target.files[0].name;
+  console.log($(event.target).parent(), $(event.target).parent().find('span'));
+  $(event.target).parent().find('span').addClass('FileLabel--IsUploaded').attr('data-file-name', name);
+});
