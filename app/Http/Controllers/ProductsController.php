@@ -22,6 +22,108 @@ class ProductsController extends Controller
     $this->attributes = \collect(Woocommerce::get('products/attributes'));
   }
 
+  public function changeProducts()
+  {
+//    dump($this->attributes);
+//    $catAgeTerms = \collect(Woocommerce::get('products/attributes/7/terms'));
+//    $dogAgeTerms = \collect(Woocommerce::get('products/attributes/11/terms'));
+//    $dogSizeTerms = \collect(Woocommerce::get('products/attributes/12/terms'));
+//    dump($catAgeTerms);
+//    dump($dogAgeTerms);
+//    dump($dogSizeTerms);
+//    $catsWithAnyAge = $pageProducts = \collectWoocommerce::get('products', [
+//      'per_page' => 100,
+//      'attribute_term' => 119
+//    ]);
+    $products = [];
+    for ($i = 1; $i < 18; $i++) {
+      $pageProducts = Woocommerce::get('products', [
+        'per_page' => 100,
+        'page' => $i,
+//        'attribute' => '7',
+//        'attribute_term' => '119'
+      ]);
+      $products = array_merge($products, $pageProducts);
+    }
+    // dump($products[1]);
+    $productsToChange = [];
+    for ($i = 0; $i < count($products); $i++) {
+      $shouldChange = false;
+      for ($j = 0; $j < count($products[$i]['attributes']); $j++) {
+        // dump($products[$i]);
+        if ($products[$i]['attributes'][$j]['name'] === 'Вік котика') {
+          for ($k = 0; $k < count($products[$i]['attributes'][$j]['options']); $k++) {
+            if ($products[$i]['attributes'][$j]['options'][$k] === 'Для будь-якого віку') {
+              $products[$i]['attributes'][$j]['options'][$k] = 'Для малечі';
+              array_push(
+                $products[$i]['attributes'][$j]['options'],
+                'Для дорослих котанів і киць',
+                'Для літніх киць і котиків'
+              );
+              array_push($productsToChange, [
+                'id' => $products[$i]['id'],
+                'attributes' => $products[$i]['attributes']
+              ]);
+              break;
+            }
+          }
+          break;
+        } else {
+          if ($products[$i]['attributes'][$j]['name'] === 'Вік песика') {
+            for ($k = 0; $k < count($products[$i]['attributes'][$j]['options']); $k++) {
+              if ($products[$i]['attributes'][$j]['options'][$k] === 'Для будь-якого віку') {
+                $products[$i]['attributes'][$j]['options'][$k] = 'Для малечі';
+                array_push(
+                  $products[$i]['attributes'][$j]['options'],
+                  'Для юніорів (підлітків)',
+                  'Для дорослих собацюр',
+                  'Для літніх песиків'
+                );
+                $shouldChange = true;
+                break;
+              }
+            }
+          }
+          if ($products[$i]['attributes'][$j]['name'] === 'Розмір собаки') {
+            for ($k = 0; $k < count($products[$i]['attributes'][$j]['options']); $k++) {
+              if ($products[$i]['attributes'][$j]['options'][$k] === 'Розмір не має значення') {
+                $products[$i]['attributes'][$j]['options'][$k] = 'У мене невеличкий песик';
+                array_push(
+                  $products[$i]['attributes'][$j]['options'],
+                  'Мій пес середнього розміру',
+                  'У мене крупний пес'
+                );
+                $shouldChange = true;
+                break;
+              }
+            }
+          }
+        }
+      }
+      if ($shouldChange) {
+        array_push($productsToChange, [
+          'id' => $products[$i]['id'],
+          'attributes' => $products[$i]['attributes']
+        ]);
+      }
+    }
+
+    $chunks = array_chunk($productsToChange, 100);
+    for ($i = 0; $i < count($chunks); $i++) {
+      dump(Woocommerce::post('products/batch', [
+        'update' => $chunks[$i]
+      ]));
+    }
+
+
+    //    $catAgeProducts = array_filter($products, function($value, $key) {
+//      $attribute = array_filter($value->attributes, function() {})
+//      return $value->attributes['name'] === 'Вік котика' && $value->attributes
+//    }, ARRAY_FILTER_USE_BOTH);
+//    dump($catAgeProducts);
+//     return view('products/upload');
+  }
+
   public function showUploadForm()
   {
     return view('products/upload');
